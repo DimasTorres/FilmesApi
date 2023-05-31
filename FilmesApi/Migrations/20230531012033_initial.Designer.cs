@@ -3,6 +3,7 @@ using System;
 using FilmesApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,16 +11,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmesApi.Migrations
 {
     [DbContext(typeof(FilmeContext))]
-    partial class FilmeContextModelSnapshot : ModelSnapshot
+    [Migration("20230531012033_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("FilmesAPI.Models.Cinema", b =>
+            modelBuilder.Entity("FilmesApi.Models.Cinema", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,15 +42,17 @@ namespace FilmesApi.Migrations
                     b.ToTable("Cinemas");
                 });
 
-            modelBuilder.Entity("FilmesAPI.Models.Endereco", b =>
+            modelBuilder.Entity("FilmesApi.Models.Endereco", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Logradouro")
-                        .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -86,21 +90,20 @@ namespace FilmesApi.Migrations
                     b.ToTable("Filmes");
                 });
 
-            modelBuilder.Entity("FilmesAPI.Models.Cinema", b =>
+            modelBuilder.Entity("FilmesApi.Models.Cinema", b =>
                 {
-                    b.HasOne("FilmesAPI.Models.Endereco", "Endereco")
+                    b.HasOne("FilmesApi.Models.Endereco", "Endereco")
                         .WithOne("Cinema")
-                        .HasForeignKey("FilmesAPI.Models.Cinema", "EnderecoId")
+                        .HasForeignKey("FilmesApi.Models.Cinema", "EnderecoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Endereco");
                 });
 
-            modelBuilder.Entity("FilmesAPI.Models.Endereco", b =>
+            modelBuilder.Entity("FilmesApi.Models.Endereco", b =>
                 {
-                    b.Navigation("Cinema")
-                        .IsRequired();
+                    b.Navigation("Cinema");
                 });
 #pragma warning restore 612, 618
         }

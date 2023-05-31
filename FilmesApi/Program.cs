@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
@@ -12,7 +13,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("FilmeConnection");
 
-builder.Services.AddDbContext<FilmeContext>(opts => opts.UseMySQL(connectionString));
+//builder.Services.AddDbContext<FilmeContext>(opts => opts.UseMySQL(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddDbContext<FilmeContext>(
+            dbContextOptions => dbContextOptions
+                .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+                // The following three options help with debugging, but should
+                // be changed or removed for production.
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors()
+        );
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
@@ -22,7 +35,7 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 
@@ -38,11 +51,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
-
-using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
-{
-    var context = serviceScope.ServiceProvider.GetRequiredService<FilmeContext>();
-    context.Database.EnsureCreated();
-}
 
 app.Run();
