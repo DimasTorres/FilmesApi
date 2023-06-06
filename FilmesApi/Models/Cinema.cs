@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace FilmesAPI.Models;
+namespace FilmesApi.Models;
 
 public class Cinema
 {
@@ -11,4 +12,5 @@ public class Cinema
     public string Nome { get; set; }
     public int EnderecoId { get; set; }
     public virtual Endereco Endereco { get; set; }
+    public virtual ICollection<Sessao> Sessoes { get; set; }
 }

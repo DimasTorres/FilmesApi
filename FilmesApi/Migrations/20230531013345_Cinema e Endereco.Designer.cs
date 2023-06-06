@@ -21,7 +21,7 @@ namespace FilmesApi.Migrations
                 .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("FilmesAPI.Models.Cinema", b =>
+            modelBuilder.Entity("FilmesApi.Models.Cinema", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace FilmesApi.Migrations
                     b.ToTable("Cinemas");
                 });
 
-            modelBuilder.Entity("FilmesAPI.Models.Endereco", b =>
+            modelBuilder.Entity("FilmesApi.Models.Endereco", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace FilmesApi.Migrations
                     b.ToTable("Enderecos");
                 });
 
-            modelBuilder.Entity("FilmesAPI.Models.Filme", b =>
+            modelBuilder.Entity("FilmesApi.Models.Filme", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,18 +88,18 @@ namespace FilmesApi.Migrations
                     b.ToTable("Filmes");
                 });
 
-            modelBuilder.Entity("FilmesAPI.Models.Cinema", b =>
+            modelBuilder.Entity("FilmesApi.Models.Cinema", b =>
                 {
-                    b.HasOne("FilmesAPI.Models.Endereco", "Endereco")
+                    b.HasOne("FilmesApi.Models.Endereco", "Endereco")
                         .WithOne("Cinema")
-                        .HasForeignKey("FilmesAPI.Models.Cinema", "EnderecoId")
+                        .HasForeignKey("FilmesApi.Models.Cinema", "EnderecoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Endereco");
                 });
 
-            modelBuilder.Entity("FilmesAPI.Models.Endereco", b =>
+            modelBuilder.Entity("FilmesApi.Models.Endereco", b =>
                 {
                     b.Navigation("Cinema")
                         .IsRequired();

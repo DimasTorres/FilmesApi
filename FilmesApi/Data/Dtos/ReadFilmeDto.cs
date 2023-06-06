@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace FilmesAPI.Data.Dtos;
+namespace FilmesApi.Data.Dtos;
 
 public class ReadFilmeDto
 {
@@ -12,4 +13,5 @@ public class ReadFilmeDto
     public DateTime Lancamento { get; set; }
     public decimal Faturamento { get; set; }
     public DateTime HoraDaConsulta { get; set; } = DateTime.Now;
+    public ICollection<ReadSessaoDto> Sessoes { get; set; }
 }

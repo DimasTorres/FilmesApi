@@ -59,7 +59,7 @@ namespace FilmesApi.Migrations
                     b.ToTable("Enderecos");
                 });
 
-            modelBuilder.Entity("FilmesAPI.Models.Filme", b =>
+            modelBuilder.Entity("FilmesApi.Models.Filme", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

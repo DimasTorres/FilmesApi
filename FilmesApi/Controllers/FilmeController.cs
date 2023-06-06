@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using FilmesApi.Data;
-using FilmesAPI.Data.Dtos;
-using FilmesAPI.Models;
+using FilmesApi.Data.Dtos;
+using FilmesApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FilmesAPI.Controllers;
+namespace FilmesApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -47,9 +47,9 @@ public class FilmeController : ControllerBase
     /// <returns>Informações dos filmes buscados</returns>
     /// <response code="200">Com a lista de filmes presentes na base de dados</response>
     [HttpGet]
-    public IEnumerable<Filme> RecuperaFilmes(int skip = 0, int take = 10)
+    public IEnumerable<ReadFilmeDto> RecuperaFilmes(int skip = 0, int take = 10)
     {
-        return _context.Filmes.Skip(skip).Take(take);
+        return _mapper.Map<List<ReadFilmeDto>>(_context.Filmes.Skip(skip).Take(take).ToList());
     }
 
     /// <summary>

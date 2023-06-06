@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace FilmesAPI.Models;
+namespace FilmesApi.Models;
 
 public class Filme
 {
@@ -18,4 +19,6 @@ public class Filme
     public string Genero { get; set; }
     public DateTime Lancamento { get; set; }
     public decimal Faturamento { get; set; }
+
+    public virtual ICollection<Sessao> Sessoes { get; set; }
 }
